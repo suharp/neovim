@@ -45,20 +45,47 @@ local on_attach = function(client, bufnr)
 end
 
 -- =============== Go Language Server ===============
+-- Go-specific on_attach with organize imports
+local function go_on_attach(client, bufnr)
+	-- Call the general on_attach first
+	on_attach(client, bufnr)
+
+	-- Organize imports on save for Go files
+	vim.api.nvim_create_autocmd("BufWritePre", {
+		buffer = bufnr,
+		callback = function()
+			-- Organize imports
+			local params = vim.lsp.util.make_range_params()
+			params.context = { only = { "source.organizeImports" } }
+			local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, 1000)
+			for _, res in pairs(result or {}) do
+				for _, r in pairs(res.result or {}) do
+					if r.edit then
+						vim.lsp.util.apply_workspace_edit(r.edit, "utf-8")
+					end
+				end
+			end
+		end,
+	})
+end
+
 vim.lsp.config.gopls = {
 	cmd = { "gopls" },
 	filetypes = { "go", "gomod", "gowork", "gotmpl" },
 	root_markers = { "go.work", "go.mod", ".git" },
 	capabilities = capabilities,
-	on_attach = on_attach,
+	on_attach = go_on_attach,
 	settings = {
 		gopls = {
 			analyses = {
 				unusedparams = true,
 				shadow = true,
+				unusedwrite = true,
 			},
 			staticcheck = true,
 			gofumpt = true,
+			completeUnimported = true,
+			usePlaceholders = true,
 			hints = {
 				assignVariableTypes = true,
 				compositeLiteralFields = true,
