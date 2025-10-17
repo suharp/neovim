@@ -103,7 +103,7 @@ vim.keymap.set("i", "<C-S-Space>", vim.lsp.buf.signature_help, { desc = "Trigger
 vim.keymap.set("n", "<F2>", "<cmd>Lspsaga rename<CR>", { desc = "Rename symbol" })
 
 -- Format document
-vim.keymap.set("n", "<S-A-f>", function()
+vim.keymap.set("n", "<leader>f", function()
 	vim.lsp.buf.format({ async = false })
 end, { desc = "Format document" })
 
@@ -195,10 +195,6 @@ vim.keymap.set("n", "<leader>grb", ":Git rebase ", { desc = "Rebase" })
 
 -- =========== Outline / Symbols ===========
 vim.keymap.set("n", "<C-S-o>", "<cmd>Lspsaga outline<CR>", { desc = "Toggle outline" })
-
--- =========== Claude Code ===========
-vim.keymap.set("n", "<leader>cc", ":ClaudeTerminal<CR>", { desc = "Open Claude Code Chat" })
-vim.keymap.set("n", "<leader>cr", ":ClaudeReview<CR>", { desc = "Review Claude Changes" })
 
 -- =========== Zen Mode / Focus ===========
 vim.keymap.set("n", "<C-k>z", ":ZenMode<CR>", { desc = "Toggle zen mode" })

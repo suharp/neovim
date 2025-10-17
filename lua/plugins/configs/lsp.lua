@@ -116,6 +116,9 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- =============== JSON Language Server ===============
+local has_schemastore, schemastore = pcall(require, "schemastore")
+local json_schemas = has_schemastore and schemastore.json.schemas() or {}
+
 vim.lsp.config.jsonls = {
 	cmd = { "vscode-json-language-server", "--stdio" },
 	filetypes = { "json", "jsonc" },
@@ -124,8 +127,9 @@ vim.lsp.config.jsonls = {
 	on_attach = on_attach,
 	settings = {
 		json = {
-			schemas = require("schemastore").json.schemas(),
+			schemas = json_schemas,
 			validate = { enable = true },
+			format = { enable = true },
 		},
 	},
 }
@@ -146,6 +150,7 @@ vim.lsp.config.yamlls = {
 	on_attach = on_attach,
 	settings = {
 		yaml = {
+			format = { enable = true },
 			schemas = {
 				["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
 				["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] = "docker-compose*.yml",
