@@ -140,27 +140,58 @@ vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "Focus up" })
 vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Focus right" })
 
 -- =========== Git (Source Control) ===========
-vim.keymap.set("n", "<leader>gg", ":Git<CR>", { desc = "Source control" })
+-- Git status
+vim.keymap.set("n", "<leader>gg", ":Git<CR>", { desc = "Git status" })
+
+-- Hunk operations (Gitsigns)
 vim.keymap.set("n", "<leader>gb", "<cmd>Gitsigns blame_line<CR>", { desc = "Git blame" })
 vim.keymap.set("n", "<leader>gd", "<cmd>Gitsigns preview_hunk<CR>", { desc = "Preview changes" })
-vim.keymap.set("n", "<leader>gr", "<cmd>Gitsigns reset_hunk<CR>", { desc = "Revert changes" })
-vim.keymap.set("n", "<leader>gs", "<cmd>Gitsigns stage_hunk<CR>", { desc = "Stage changes" })
+vim.keymap.set("n", "<leader>gs", "<cmd>Gitsigns stage_hunk<CR>", { desc = "Stage hunk" })
 vim.keymap.set("n", "[c", "<cmd>Gitsigns prev_hunk<CR>", { desc = "Previous change" })
 vim.keymap.set("n", "]c", "<cmd>Gitsigns next_hunk<CR>", { desc = "Next change" })
 
--- Git diff commands
-vim.keymap.set("n", "<leader>gD", ":Gvdiffsplit<CR>", { desc = "Diff current file (split)" })
-vim.keymap.set("n", "<leader>gf", ":Git diff<CR>", { desc = "Diff all files" })
-vim.keymap.set("n", "<leader>gh", ":Git diff HEAD<CR>", { desc = "Diff vs HEAD" })
-vim.keymap.set("n", "<leader>gC", ":Git diff --cached<CR>", { desc = "Diff staged changes" })
+-- Git log
 vim.keymap.set("n", "<leader>gl", ":Git log --oneline<CR>", { desc = "Git log" })
 
--- Git workflow commands
-vim.keymap.set("n", "<leader>ga", ":Git add .<CR>", { desc = "Git add all" })
-vim.keymap.set("n", "<leader>gA", ":Git add %<CR>", { desc = "Git add current file" })
-vim.keymap.set("n", "<leader>gc", ":Git commit<CR>", { desc = "Git commit" })
-vim.keymap.set("n", "<leader>gp", ":Git push<CR>", { desc = "Git push" })
-vim.keymap.set("n", "<leader>gP", ":Git pull<CR>", { desc = "Git pull" })
+-- Git diff
+vim.keymap.set("n", "<leader>gD", ":Gvdiffsplit<CR>", { desc = "Diff file (split)" })
+vim.keymap.set("n", "<leader>gdf", ":Git diff<CR>", { desc = "Diff all files" })
+
+-- Git add
+vim.keymap.set("n", "<leader>ga", ":Git add .<CR>", { desc = "Add all files" })
+vim.keymap.set("n", "<leader>gA", ":Git add %<CR>", { desc = "Add current file" })
+
+-- Git commit
+vim.keymap.set("n", "<leader>gc", ":Git commit<CR>", { desc = "Commit" })
+vim.keymap.set("n", "<leader>gcm", ":Git commit -m ", { desc = "Commit with message" })
+
+-- Git push/pull
+vim.keymap.set("n", "<leader>gp", ":Git push<CR>", { desc = "Push" })
+vim.keymap.set("n", "<leader>gP", ":Git pull<CR>", { desc = "Pull" })
+
+-- Git checkout
+vim.keymap.set("n", "<leader>gco", ":Git checkout ", { desc = "Checkout branch" })
+vim.keymap.set("n", "<leader>gcob", ":Git checkout -b ", { desc = "Checkout new branch" })
+
+-- Git revert
+vim.keymap.set("n", "<leader>gR", "<cmd>Gitsigns reset_hunk<CR>", { desc = "Revert hunk" })
+vim.keymap.set("n", "<leader>gRf", ":Git checkout -- %<CR>", { desc = "Revert file" })
+
+-- Git reset
+vim.keymap.set("n", "<leader>grs", ":Git reset<CR>", { desc = "Reset (unstage)" })
+vim.keymap.set("n", "<leader>grh", ":Git reset --hard<CR>", { desc = "Reset hard" })
+
+-- Git cherry-pick
+vim.keymap.set("n", "<leader>gcp", ":Git cherry-pick ", { desc = "Cherry-pick" })
+
+-- Git fetch
+vim.keymap.set("n", "<leader>gf", ":Git fetch<CR>", { desc = "Fetch" })
+
+-- Git merge
+vim.keymap.set("n", "<leader>gm", ":Git merge ", { desc = "Merge" })
+
+-- Git rebase
+vim.keymap.set("n", "<leader>grb", ":Git rebase ", { desc = "Rebase" })
 
 -- =========== Outline / Symbols ===========
 vim.keymap.set("n", "<C-S-o>", "<cmd>Lspsaga outline<CR>", { desc = "Toggle outline" })
