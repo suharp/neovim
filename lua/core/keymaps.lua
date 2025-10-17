@@ -152,8 +152,15 @@ vim.keymap.set("n", "]c", "<cmd>Gitsigns next_hunk<CR>", { desc = "Next change" 
 vim.keymap.set("n", "<leader>gD", ":Gvdiffsplit<CR>", { desc = "Diff current file (split)" })
 vim.keymap.set("n", "<leader>gf", ":Git diff<CR>", { desc = "Diff all files" })
 vim.keymap.set("n", "<leader>gh", ":Git diff HEAD<CR>", { desc = "Diff vs HEAD" })
-vim.keymap.set("n", "<leader>gc", ":Git diff --cached<CR>", { desc = "Diff staged changes" })
+vim.keymap.set("n", "<leader>gC", ":Git diff --cached<CR>", { desc = "Diff staged changes" })
 vim.keymap.set("n", "<leader>gl", ":Git log --oneline<CR>", { desc = "Git log" })
+
+-- Git workflow commands
+vim.keymap.set("n", "<leader>ga", ":Git add .<CR>", { desc = "Git add all" })
+vim.keymap.set("n", "<leader>gA", ":Git add %<CR>", { desc = "Git add current file" })
+vim.keymap.set("n", "<leader>gc", ":Git commit<CR>", { desc = "Git commit" })
+vim.keymap.set("n", "<leader>gp", ":Git push<CR>", { desc = "Git push" })
+vim.keymap.set("n", "<leader>gP", ":Git pull<CR>", { desc = "Git pull" })
 
 -- =========== Outline / Symbols ===========
 vim.keymap.set("n", "<C-S-o>", "<cmd>Lspsaga outline<CR>", { desc = "Toggle outline" })
