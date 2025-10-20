@@ -116,8 +116,8 @@ vim.keymap.set("n", "<C-S-m>", function()
 end, { desc = "Show problems" })
 
 -- Next/Previous problem
-vim.keymap.set("n", "<F8>", "<cmd>Lspsaga diagnostic_jump_next<CR>", { desc = "Next problem" })
-vim.keymap.set("n", "<S-F8>", "<cmd>Lspsaga diagnostic_jump_prev<CR>", { desc = "Previous problem" })
+vim.keymap.set("n", "]d", "<cmd>Lspsaga diagnostic_jump_next<CR>", { desc = "Next problem" })
+vim.keymap.set("n", "[d", "<cmd>Lspsaga diagnostic_jump_prev<CR>", { desc = "Previous problem" })
 
 -- Show error/warning
 vim.keymap.set("n", "<leader>d", "<cmd>Lspsaga show_line_diagnostics<CR>", { desc = "Show line diagnostics" })

@@ -36,10 +36,19 @@ require("toggleterm").setup({
 local keymap = vim.keymap.set
 local opts = { noremap = true, silent = true }
 
--- Toggle terminal
+-- Toggle terminal (direction-based)
 keymap("n", "<leader>tf", "<cmd>ToggleTerm direction=float<cr>", { desc = "Toggle floating terminal" })
 keymap("n", "<leader>th", "<cmd>ToggleTerm direction=horizontal<cr>", { desc = "Toggle horizontal terminal" })
 keymap("n", "<leader>tv", "<cmd>ToggleTerm direction=vertical<cr>", { desc = "Toggle vertical terminal" })
+
+-- Multiple numbered terminals (can open up to 4 terminals)
+keymap("n", "<leader>t1", "<cmd>1ToggleTerm<cr>", { desc = "Toggle terminal 1" })
+keymap("n", "<leader>t2", "<cmd>2ToggleTerm<cr>", { desc = "Toggle terminal 2" })
+keymap("n", "<leader>t3", "<cmd>3ToggleTerm<cr>", { desc = "Toggle terminal 3" })
+keymap("n", "<leader>t4", "<cmd>4ToggleTerm<cr>", { desc = "Toggle terminal 4" })
+
+-- Toggle all terminals at once
+keymap("n", "<leader>ta", "<cmd>ToggleTermToggleAll<cr>", { desc = "Toggle all terminals" })
 
 -- Terminal mode keymaps
 function _G.set_terminal_keymaps()

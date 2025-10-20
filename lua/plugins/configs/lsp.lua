@@ -233,3 +233,9 @@ vim.diagnostic.config({
 		prefix = "",
 	},
 })
+
+-- Set diagnostic underline colors (bright and visible)
+vim.api.nvim_set_hl(0, "DiagnosticUnderlineError", { underline = true, sp = "#ff0000" }) -- Bright red for errors
+vim.api.nvim_set_hl(0, "DiagnosticUnderlineWarn", { underline = true, sp = "#ffaa00" }) -- Orange for warnings
+vim.api.nvim_set_hl(0, "DiagnosticUnderlineHint", { underline = true, sp = "#00ffff" }) -- Cyan for hints
+vim.api.nvim_set_hl(0, "DiagnosticUnderlineInfo", { underline = true, sp = "#00aaff" }) -- Blue for info
