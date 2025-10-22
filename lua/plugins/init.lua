@@ -98,6 +98,15 @@ require("lazy").setup({
 		lazy = false,
 	},
 
+	-- Markdown Preview
+	{
+		"ellisonleao/glow.nvim",
+		config = function()
+			require("plugins.configs.glow")
+		end,
+		cmd = "Glow",
+	},
+
 	-- Which Key (Keymap Helper)
 	{
 		"folke/which-key.nvim",
