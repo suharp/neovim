@@ -12,7 +12,7 @@ require("mason").setup({
 })
 
 require("mason-lspconfig").setup({
-	ensure_installed = { "gopls", "lua_ls", "jsonls", "bashls", "yamlls" },
+	ensure_installed = { "gopls", "lua_ls", "jsonls", "bashls", "yamlls", "ts_ls", "tailwindcss", "eslint" },
 	automatic_installation = true,
 })
 
@@ -206,6 +206,151 @@ vim.api.nvim_create_autocmd("FileType", {
 	pattern = { "sh", "bash" },
 	callback = function()
 		vim.lsp.start({ name = "bashls" })
+	end,
+})
+
+-- =============== TypeScript/JavaScript Language Server ===============
+-- TypeScript-specific on_attach with organize imports
+local function ts_on_attach(client, bufnr)
+	-- Call the general on_attach first
+	on_attach(client, bufnr)
+
+	-- Organize imports on save for TS/JS files
+	vim.api.nvim_create_autocmd("BufWritePre", {
+		buffer = bufnr,
+		callback = function()
+			-- Organize imports
+			local params = vim.lsp.util.make_range_params()
+			params.context = { only = { "source.organizeImports" } }
+			local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, 1000)
+			for _, res in pairs(result or {}) do
+				for _, r in pairs(res.result or {}) do
+					if r.edit then
+						vim.lsp.util.apply_workspace_edit(r.edit, "utf-8")
+					end
+				end
+			end
+		end,
+	})
+end
+
+vim.lsp.config.ts_ls = {
+	cmd = { "typescript-language-server", "--stdio" },
+	filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
+	root_markers = { "package.json", "tsconfig.json", "jsconfig.json", ".git" },
+	capabilities = capabilities,
+	on_attach = ts_on_attach,
+	settings = {
+		typescript = {
+			inlayHints = {
+				includeInlayParameterNameHints = "all",
+				includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+				includeInlayFunctionParameterTypeHints = true,
+				includeInlayVariableTypeHints = true,
+				includeInlayPropertyDeclarationTypeHints = true,
+				includeInlayFunctionLikeReturnTypeHints = true,
+				includeInlayEnumMemberValueHints = true,
+			},
+		},
+		javascript = {
+			inlayHints = {
+				includeInlayParameterNameHints = "all",
+				includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+				includeInlayFunctionParameterTypeHints = true,
+				includeInlayVariableTypeHints = true,
+				includeInlayPropertyDeclarationTypeHints = true,
+				includeInlayFunctionLikeReturnTypeHints = true,
+				includeInlayEnumMemberValueHints = true,
+			},
+		},
+	},
+}
+
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
+	callback = function()
+		vim.lsp.start({ name = "ts_ls" })
+	end,
+})
+
+-- =============== Tailwind CSS Language Server ===============
+vim.lsp.config.tailwindcss = {
+	cmd = { "tailwindcss-language-server", "--stdio" },
+	filetypes = { "html", "css", "scss", "javascript", "javascriptreact", "typescript", "typescriptreact" },
+	root_markers = { "tailwind.config.js", "tailwind.config.ts", ".git" },
+	capabilities = capabilities,
+	on_attach = on_attach,
+	settings = {
+		tailwindCSS = {
+			classAttributes = { "class", "className", "classList", "ngClass" },
+			lint = {
+				cssConflict = "warning",
+				invalidApply = "error",
+				invalidConfigPath = "error",
+				invalidScreen = "error",
+				invalidTailwindDirective = "error",
+				invalidVariant = "error",
+				recommendedVariantOrder = "warning",
+			},
+			validate = true,
+		},
+	},
+}
+
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = { "html", "css", "scss", "javascript", "javascriptreact", "typescript", "typescriptreact" },
+	callback = function()
+		vim.lsp.start({ name = "tailwindcss" })
+	end,
+})
+
+-- =============== ESLint Language Server ===============
+vim.lsp.config.eslint = {
+	cmd = { "vscode-eslint-language-server", "--stdio" },
+	filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
+	root_markers = { ".eslintrc", ".eslintrc.js", ".eslintrc.json", "package.json", ".git" },
+	capabilities = capabilities,
+	on_attach = function(client, bufnr)
+		on_attach(client, bufnr)
+		-- Auto-fix on save
+		vim.api.nvim_create_autocmd("BufWritePre", {
+			buffer = bufnr,
+			command = "EslintFixAll",
+		})
+	end,
+	settings = {
+		codeAction = {
+			disableRuleComment = {
+				enable = true,
+				location = "separateLine",
+			},
+			showDocumentation = {
+				enable = true,
+			},
+		},
+		codeActionOnSave = {
+			enable = false,
+			mode = "all",
+		},
+		format = true,
+		nodePath = "",
+		onIgnoredFiles = "off",
+		packageManager = "npm",
+		quiet = false,
+		rulesCustomizations = {},
+		run = "onType",
+		useESLintClass = false,
+		validate = "on",
+		workingDirectory = {
+			mode = "location",
+		},
+	},
+}
+
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
+	callback = function()
+		vim.lsp.start({ name = "eslint" })
 	end,
 })
 
