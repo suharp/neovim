@@ -180,7 +180,8 @@ vim.lsp.config.yamlls = {
 			format = { enable = true },
 			schemas = {
 				["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
-				["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] = "docker-compose*.yml",
+				["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] =
+				"docker-compose*.yml",
 			},
 		},
 	},
@@ -319,6 +320,9 @@ vim.lsp.config.eslint = {
 		})
 	end,
 	settings = {
+		experimental = {
+			useFlatConfig = false,
+		},
 		codeAction = {
 			disableRuleComment = {
 				enable = true,
@@ -381,6 +385,6 @@ vim.diagnostic.config({
 
 -- Set diagnostic underline colors (bright and visible)
 vim.api.nvim_set_hl(0, "DiagnosticUnderlineError", { underline = true, sp = "#ff0000" }) -- Bright red for errors
-vim.api.nvim_set_hl(0, "DiagnosticUnderlineWarn", { underline = true, sp = "#ffaa00" }) -- Orange for warnings
-vim.api.nvim_set_hl(0, "DiagnosticUnderlineHint", { underline = true, sp = "#00ffff" }) -- Cyan for hints
-vim.api.nvim_set_hl(0, "DiagnosticUnderlineInfo", { underline = true, sp = "#00aaff" }) -- Blue for info
+vim.api.nvim_set_hl(0, "DiagnosticUnderlineWarn", { underline = true, sp = "#ffaa00" })  -- Orange for warnings
+vim.api.nvim_set_hl(0, "DiagnosticUnderlineHint", { underline = true, sp = "#00ffff" })  -- Cyan for hints
+vim.api.nvim_set_hl(0, "DiagnosticUnderlineInfo", { underline = true, sp = "#00aaff" })  -- Blue for info
